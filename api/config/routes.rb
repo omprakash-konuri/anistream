@@ -10,6 +10,12 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :animes, only: [:index, :show, :create, :update, :destroy]
+      
+      namespace :auth do
+        post :register
+        post :login
+        get :current_user
+      end
     end
   end
 end
