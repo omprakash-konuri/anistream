@@ -13,6 +13,8 @@ Rails.application.routes.draw do
         resources :episodes, only: [:index, :show]
       end
 
+      resources :episodes, only: [:show]
+
       namespace :auth do
         post :register
         post :login

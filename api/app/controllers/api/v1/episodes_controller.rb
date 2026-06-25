@@ -6,8 +6,12 @@ class Api::V1::EpisodesController < ApplicationController
   end
 
   def show
-    anime = Anime.find(params[:anime_id])
-    episode = anime.episodes.find(params[:id])
+    if params[:anime_id]
+      anime = Anime.find(params[:anime_id])
+      episode = anime.episodes.find(params[:id])
+    else
+      episode = Episode.find(params[:id])
+    end
     render json: episode
   end
 end

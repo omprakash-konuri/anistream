@@ -1,0 +1,27 @@
+.watch {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.watch-player {
+  width: 100%;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000;
+}
+
+.watch-player video {
+  width: 100%;
+}
+
+.watch-info h1 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.watch-info p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}

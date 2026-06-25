@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Browse from './pages/Browse'
 import Navbar from './components/Navbar'
 import AnimeDetail from './pages/AnimeDetail'
+import Watch from './pages/Watch'
 import './App.css'
 
 
@@ -30,6 +31,11 @@ function App() {
             <Route path='/anime/:id' element={
               <ProtectedRoute>
                 <AnimeDetail />
+              </ProtectedRoute>
+            } />
+            <Route path='/watch/:id' element={
+              <ProtectedRoute>
+                <Watch />
               </ProtectedRoute>
             } />
           </Routes>
