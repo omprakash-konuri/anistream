@@ -1,0 +1,32 @@
+.anime-row {
+  margin-bottom: 40px;
+}
+
+.anime-row-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.anime-row-cards {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.anime-row-cards::-webkit-scrollbar {
+  height: 4px;
+}
+
+.anime-row-cards::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.anime-row-cards::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}

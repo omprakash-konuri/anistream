@@ -1,0 +1,64 @@
+.browse h1 {
+  font-size: 32px;
+  margin-bottom: 24px;
+}
+
+.browse-controls {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.browse-search {
+  padding: 10px 16px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 14px;
+  width: 280px;
+  outline: none;
+}
+
+.browse-search:focus {
+  border-color: var(--text-secondary);
+}
+
+.browse-filters {
+  display: flex;
+  gap: 8px;
+}
+
+.browse-filters button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: 13px;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+
+.browse-filters button:hover {
+  color: var(--text-primary);
+  border-color: var(--text-primary);
+}
+
+.browse-filters button.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.browse-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.no-results {
+  color: var(--text-secondary);
+  font-size: 14px;
+}

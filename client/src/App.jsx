@@ -14,24 +14,26 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Navbar/>
-        <Routes>
-          <Route path='/login' element={<Login />} />
-          <Route path='/' element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          } />
-          <Route path='/browse' element={
-            <ProtectedRoute>
-              <Browse />
-            </ProtectedRoute>
-          } />
-          <Route path='/anime/:id' element={
-            <ProtectedRoute>
-              <AnimeDetail />
-            </ProtectedRoute>
-          } />
-        </Routes>
+        <div className="app">
+          <Routes>
+            <Route path='/login' element={<Login />} />
+            <Route path='/' element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            } />
+            <Route path='/browse' element={
+              <ProtectedRoute>
+                <Browse />
+              </ProtectedRoute>
+            } />
+            <Route path='/anime/:id' element={
+              <ProtectedRoute>
+                <AnimeDetail />
+              </ProtectedRoute>
+            } />
+          </Routes>
+        </div>
       </BrowserRouter>
     </AuthProvider>
   )
