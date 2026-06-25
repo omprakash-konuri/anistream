@@ -9,8 +9,10 @@ Rails.application.routes.draw do
   # root "posts#index"
   namespace :api do
     namespace :v1 do
-      resources :animes, only: [:index, :show, :create, :update, :destroy]
-      
+      resources :animes, only: [:index, :show, :create, :update, :destroy] do
+        resources :episodes, only: [:index, :show]
+      end
+
       namespace :auth do
         post :register
         post :login
