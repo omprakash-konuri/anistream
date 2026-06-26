@@ -1,21 +1,25 @@
 import { useState, useEffect } from 'react'
+import { useAuth } from '../context/AuthContext'
 import AnimeCard from '../components/AnimeCard'
 import './Browse.css'
 
 function Browse() {
+  const { token } = useAuth()
   const [animes, setAnimes] = useState([])
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState('all')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/v1/animes')
+    fetch('http://localhost:3000/api/v1/animes', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
       .then(res => res.json())
       .then(data => {
         setAnimes(data)
         setLoading(false)
       })
-  }, [])
+  }, [token])
 
   const filtered = animes
     .filter(a => filter === 'all' || a.status === filter)

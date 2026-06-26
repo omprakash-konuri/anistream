@@ -1,19 +1,23 @@
 import { useState, useEffect } from 'react'
+import { useAuth } from '../context/AuthContext'
 import AnimeRow from '../components/AnimeRow'
 import './Home.css'
 
 function Home() {
+  const { token } = useAuth()
   const [animes, setAnimes] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/v1/animes')
+    fetch('http://localhost:3000/api/v1/animes', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
       .then(res => res.json())
       .then(data => {
         setAnimes(data)
         setLoading(false)
       })
-  }, [])
+  }, [token])
 
   if (loading) return <h2>Loading...</h2>
 

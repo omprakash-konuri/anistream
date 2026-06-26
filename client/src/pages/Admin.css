@@ -1,0 +1,100 @@
+.admin h1 {
+  font-size: 32px;
+  margin-bottom: 32px;
+}
+
+.admin-form-section {
+  background: var(--bg-secondary);
+  padding: 24px;
+  border-radius: 8px;
+  margin-bottom: 40px;
+}
+
+.admin-form-section h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 500px;
+}
+
+.admin-form input,
+.admin-form textarea,
+.admin-form select {
+  padding: 10px 14px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 14px;
+  outline: none;
+}
+
+.admin-form textarea {
+  height: 80px;
+  resize: vertical;
+}
+
+.admin-form button {
+  padding: 10px 20px;
+  background: var(--accent);
+  color: white;
+  border-radius: 4px;
+  font-size: 14px;
+  width: fit-content;
+}
+
+.admin-message {
+  color: #22c55e;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.admin-list-section h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.admin-anime-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-anime-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+}
+
+.admin-anime-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-anime-info h4 {
+  font-size: 14px;
+}
+
+.admin-delete-btn {
+  background: transparent;
+  color: #ef4444;
+  border: 1px solid #ef4444;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+
+.admin-delete-btn:hover {
+  background: #ef4444;
+  color: white;
+}

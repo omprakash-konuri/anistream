@@ -8,6 +8,7 @@ import Navbar from './components/Navbar'
 import AnimeDetail from './pages/AnimeDetail'
 import Watch from './pages/Watch'
 import Watchlist from './pages/Watchlist'
+import Admin from './pages/Admin'
 import './App.css'
 
 
@@ -42,6 +43,11 @@ function App() {
             <Route path='/watchlist' element={
               <ProtectedRoute>
                 <Watchlist />
+              </ProtectedRoute>
+            } />
+            <Route path='/admin' element={
+              <ProtectedRoute>
+                <Admin />
               </ProtectedRoute>
             } />
           </Routes>

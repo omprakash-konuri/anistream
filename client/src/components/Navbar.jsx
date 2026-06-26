@@ -20,6 +20,9 @@ function Navbar() {
         <a href="/">Home</a>
         <a href="/browse">Browse</a>
         <a href="/watchlist">My List</a>
+        {user?.role === 'admin' && (
+          <a href="/admin">Admin</a>
+        )}
       </div>
       <div className="navbar-user">
         {user ? (

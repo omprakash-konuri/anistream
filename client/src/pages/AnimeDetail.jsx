@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import './AnimeDetail.css'
 
 function AnimeDetail() {
+  const { token } = useAuth()
   const { id } = useParams()
   const navigate = useNavigate()
   const [anime, setAnime] = useState(null)
@@ -11,14 +13,18 @@ function AnimeDetail() {
 
   useEffect(() => {
     Promise.all([
-      fetch(`http://localhost:3000/api/v1/animes/${id}`).then(r => r.json()),
-      fetch(`http://localhost:3000/api/v1/animes/${id}/episodes`).then(r => r.json())
+        fetch(`http://localhost:3000/api/v1/animes/${id}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+        }).then(r => r.json()),
+        fetch(`http://localhost:3000/api/v1/animes/${id}/episodes`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+        }).then(r => r.json())
     ]).then(([animeData, episodesData]) => {
-      setAnime(animeData)
-      setEpisodes(episodesData)
-      setLoading(false)
+        setAnime(animeData)
+        setEpisodes(episodesData)
+        setLoading(false)
     })
-  }, [id])
+  }, [id, token])
 
   if (loading) return <h2>Loading...</h2>
 
