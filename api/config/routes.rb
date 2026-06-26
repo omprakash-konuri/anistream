@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
       resources :episodes, only: [:show]
       resources :watch_history, only: [:create]
+      resources :watchlist, only: [:index, :create, :destroy]
 
       namespace :auth do
         post :register

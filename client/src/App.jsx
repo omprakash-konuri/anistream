@@ -7,6 +7,7 @@ import Browse from './pages/Browse'
 import Navbar from './components/Navbar'
 import AnimeDetail from './pages/AnimeDetail'
 import Watch from './pages/Watch'
+import Watchlist from './pages/Watchlist'
 import './App.css'
 
 
@@ -36,6 +37,11 @@ function App() {
             <Route path='/watch/:id' element={
               <ProtectedRoute>
                 <Watch />
+              </ProtectedRoute>
+            } />
+            <Route path='/watchlist' element={
+              <ProtectedRoute>
+                <Watchlist />
               </ProtectedRoute>
             } />
           </Routes>

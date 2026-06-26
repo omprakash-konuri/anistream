@@ -19,6 +19,7 @@ function Navbar() {
       <div className="navbar-links">
         <a href="/">Home</a>
         <a href="/browse">Browse</a>
+        <a href="/watchlist">My List</a>
       </div>
       <div className="navbar-user">
         {user ? (
