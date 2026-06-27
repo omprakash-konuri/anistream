@@ -10,6 +10,7 @@ import Watch from './pages/Watch'
 import Watchlist from './pages/Watchlist'
 import Admin from './pages/Admin'
 import Register from './pages/Register'
+import NotFound from './pages/NotFound'
 import './App.css'
 
 
@@ -52,6 +53,7 @@ function App() {
               </ProtectedRoute>
             } />
             <Route path='/register' element={<Register />} />
+            <Route path='*' element={<NotFound />} />
           </Routes>
         </div>
       </BrowserRouter>
