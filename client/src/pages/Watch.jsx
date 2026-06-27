@@ -13,12 +13,15 @@ function Watch() {
   const playerRef = useRef(null)
 
   useEffect(() => {
-    apiFetch(`/api/v1/episodes/${id}`)
-      .then(res => res.json())
-      .then(data => {
+    const token = localStorage.getItem('token')
+    apiFetch(`/api/v1/episodes/${id}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    })
+        .then(res => res.json())
+        .then(data => {
         setEpisode(data)
         setLoading(false)
-      })
+    })
   }, [id])
 
   useEffect(() => {
