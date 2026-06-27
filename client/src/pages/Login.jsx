@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { apiFetch } from '../utils/api'
+import './Login.css'
 
 function Login() {
   const [email, setEmail] = useState('')
@@ -17,7 +19,7 @@ function Login() {
     setError(null)
 
     try {
-      const response = await fetch('http://localhost:3000/api/v1/auth/login', {
+      const response = await apiFetch('/api/v1/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -57,6 +59,9 @@ function Login() {
       <button onClick={handleSubmit} disabled={loading}>
         {loading ? 'Logging in...' : 'Login'}
       </button>
+      <p className="login-switch">
+        Don't have an account? <a href="/register">Register</a>
+      </p>
     </div>
   )
 }

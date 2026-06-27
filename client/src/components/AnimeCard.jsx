@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import './AnimeCard.css'
+import { apiFetch } from '../utils/api'
 
 function AnimeCard({ anime }) {
   const navigate = useNavigate()
@@ -11,7 +12,7 @@ function AnimeCard({ anime }) {
   useEffect(() => {
     if (!token) return
 
-    fetch('http://localhost:3000/api/v1/watchlist', {
+    apiFetch('/api/v1/watchlist', {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -25,13 +26,13 @@ function AnimeCard({ anime }) {
     e.stopPropagation()
 
     if (inWatchlist) {
-      await fetch(`http://localhost:3000/api/v1/watchlist/${anime.id}`, {
+      await apiFetch(`/api/v1/watchlist/${anime.id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       })
       setInWatchlist(false)
     } else {
-      await fetch('http://localhost:3000/api/v1/watchlist', {
+      await apiFetch('/api/v1/watchlist', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

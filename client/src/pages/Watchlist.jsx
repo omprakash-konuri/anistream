@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import AnimeCard from '../components/AnimeCard'
 import './Watchlist.css'
+import { apiFetch } from '../utils/api'
 
 function Watchlist() {
   const { token } = useAuth()
@@ -9,7 +10,7 @@ function Watchlist() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/v1/watchlist', {
+    apiFetch('/api/v1/watchlist', {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())

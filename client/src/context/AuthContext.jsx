@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
+import { apiFetch } from '../utils/api'
 
 const AuthContext = createContext(null)
 
@@ -10,7 +11,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const storedToken = localStorage.getItem('token')
     if (storedToken) {
-      fetch('http://localhost:3000/api/v1/auth/current_user', {
+      apiFetch('/api/v1/auth/current_user', {
         headers: { 'Authorization': `Bearer ${storedToken}` }
       })
         .then(res => res.json())

@@ -9,6 +9,7 @@ import AnimeDetail from './pages/AnimeDetail'
 import Watch from './pages/Watch'
 import Watchlist from './pages/Watchlist'
 import Admin from './pages/Admin'
+import Register from './pages/Register'
 import './App.css'
 
 
@@ -50,6 +51,7 @@ function App() {
                 <Admin />
               </ProtectedRoute>
             } />
+            <Route path='/register' element={<Register />} />
           </Routes>
         </div>
       </BrowserRouter>

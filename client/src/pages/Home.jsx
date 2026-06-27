@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import AnimeRow from '../components/AnimeRow'
+import { apiFetch } from '../utils/api'
+
 import './Home.css'
 
 function Home() {
@@ -9,7 +11,7 @@ function Home() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/v1/animes', {
+    apiFetch('/api/v1/animes', {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())

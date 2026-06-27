@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import './Admin.css'
+import { apiFetch } from '../utils/api'
 
 function Admin() {
   const { user, token } = useAuth()
@@ -24,7 +25,7 @@ function Admin() {
       return
     }
 
-    fetch('http://localhost:3000/api/v1/animes', {
+    apiFetch('/api/v1/animes', {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -40,7 +41,7 @@ function Admin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const response = await fetch('http://localhost:3000/api/v1/animes', {
+    const response = await apiFetch('/api/v1/animes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -68,7 +69,7 @@ function Admin() {
   }
 
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:3000/api/v1/animes/${id}`, {
+    await apiFetch(`/api/v1/animes/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     })

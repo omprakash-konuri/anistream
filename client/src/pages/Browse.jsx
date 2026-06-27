@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import AnimeCard from '../components/AnimeCard'
 import './Browse.css'
+import { apiFetch } from '../utils/api'
 
 function Browse() {
   const { token } = useAuth()
@@ -11,7 +12,7 @@ function Browse() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/v1/animes', {
+    apiFetch('/api/v1/animes', {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import Plyr from 'plyr'
 import 'plyr/dist/plyr.css'
 import './Watch.css'
+import { apiFetch } from '../utils/api'
 
 function Watch() {
   const { id } = useParams()
@@ -12,7 +13,7 @@ function Watch() {
   const playerRef = useRef(null)
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/v1/episodes/${id}`)
+    apiFetch(`/api/v1/episodes/${id}`)
       .then(res => res.json())
       .then(data => {
         setEpisode(data)
@@ -35,7 +36,7 @@ function Watch() {
           const progress = Math.floor(playerRef.current.currentTime)
           const token = localStorage.getItem('token')
 
-          fetch(`http://localhost:3000/api/v1/watch_history`, {
+          apiFetch(`/api/v1/watch_history`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

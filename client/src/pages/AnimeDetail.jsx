@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import './AnimeDetail.css'
+import { apiFetch } from '../utils/api'
 
 function AnimeDetail() {
   const { token } = useAuth()
@@ -13,10 +14,10 @@ function AnimeDetail() {
 
   useEffect(() => {
     Promise.all([
-        fetch(`http://localhost:3000/api/v1/animes/${id}`, {
+        apiFetch(`/api/v1/animes/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
         }).then(r => r.json()),
-        fetch(`http://localhost:3000/api/v1/animes/${id}/episodes`, {
+        apiFetch(`/api/v1/animes/${id}/episodes`, {
         headers: { 'Authorization': `Bearer ${token}` }
         }).then(r => r.json())
     ]).then(([animeData, episodesData]) => {
