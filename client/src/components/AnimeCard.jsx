@@ -1,26 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import './AnimeCard.css'
 import { apiFetch } from '../utils/api'
+import './AnimeCard.css'
 
-function AnimeCard({ anime }) {
+function AnimeCard({ anime, watchlist = [], setWatchlist }) {
   const navigate = useNavigate()
   const { token } = useAuth()
-  const [inWatchlist, setInWatchlist] = useState(false)
-
-  useEffect(() => {
-    if (!token) return
-
-    apiFetch('/api/v1/watchlist', {
-      headers: { 'Authorization': `Bearer ${token}` }
-    })
-      .then(res => res.json())
-      .then(data => {
-        const found = data.some(item => item.id === anime.id)
-        setInWatchlist(found)
-      })
-  }, [anime.id, token])
+  const inWatchlist = watchlist.some(item => item.id === anime.id)
 
   const handleWatchlist = async (e) => {
     e.stopPropagation()
@@ -30,7 +17,7 @@ function AnimeCard({ anime }) {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       })
-      setInWatchlist(false)
+      setWatchlist(watchlist.filter(item => item.id !== anime.id))
     } else {
       await apiFetch('/api/v1/watchlist', {
         method: 'POST',
@@ -40,7 +27,7 @@ function AnimeCard({ anime }) {
         },
         body: JSON.stringify({ anime_id: anime.id })
       })
-      setInWatchlist(true)
+      setWatchlist([...watchlist, anime])
     }
   }
 

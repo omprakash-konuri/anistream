@@ -1,24 +1,28 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
-import AnimeRow from '../components/AnimeRow'
 import { apiFetch } from '../utils/api'
-
+import AnimeRow from '../components/AnimeRow'
 import './Home.css'
 
 function Home() {
   const { token } = useAuth()
   const [animes, setAnimes] = useState([])
+  const [watchlist, setWatchlist] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    apiFetch('/api/v1/animes', {
-      headers: { 'Authorization': `Bearer ${token}` }
+    Promise.all([
+      apiFetch('/api/v1/animes', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).then(res => res.json()),
+      apiFetch('/api/v1/watchlist', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).then(res => res.json())
+    ]).then(([animesData, watchlistData]) => {
+      setAnimes(animesData)
+      setWatchlist(watchlistData)
+      setLoading(false)
     })
-      .then(res => res.json())
-      .then(data => {
-        setAnimes(data)
-        setLoading(false)
-      })
   }, [token])
 
   if (loading) return <h2>Loading...</h2>
@@ -32,9 +36,9 @@ function Home() {
         <h1>Welcome to AniStream</h1>
         <p>Watch your favourite anime, anytime.</p>
       </div>
-      <AnimeRow title="Ongoing" animes={ongoing} />
-      <AnimeRow title="Completed" animes={completed} />
-      <AnimeRow title="All Anime" animes={animes} />
+      <AnimeRow title="Ongoing" animes={ongoing} watchlist={watchlist} setWatchlist={setWatchlist} />
+      <AnimeRow title="Completed" animes={completed} watchlist={watchlist} setWatchlist={setWatchlist} />
+      <AnimeRow title="All Anime" animes={animes} watchlist={watchlist} setWatchlist={setWatchlist} />
     </div>
   )
 }

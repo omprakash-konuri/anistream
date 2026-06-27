@@ -1,25 +1,30 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
+import { apiFetch } from '../utils/api'
 import AnimeCard from '../components/AnimeCard'
 import './Browse.css'
-import { apiFetch } from '../utils/api'
 
 function Browse() {
   const { token } = useAuth()
   const [animes, setAnimes] = useState([])
+  const [watchlist, setWatchlist] = useState([])
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState('all')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    apiFetch('/api/v1/animes', {
-      headers: { 'Authorization': `Bearer ${token}` }
+    Promise.all([
+      apiFetch('/api/v1/animes', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).then(res => res.json()),
+      apiFetch('/api/v1/watchlist', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).then(res => res.json())
+    ]).then(([animesData, watchlistData]) => {
+      setAnimes(animesData)
+      setWatchlist(watchlistData)
+      setLoading(false)
     })
-      .then(res => res.json())
-      .then(data => {
-        setAnimes(data)
-        setLoading(false)
-      })
   }, [token])
 
   const filtered = animes
@@ -40,24 +45,15 @@ function Browse() {
           className="browse-search"
         />
         <div className="browse-filters">
-          <button
-            className={filter === 'all' ? 'active' : ''}
-            onClick={() => setFilter('all')}
-          >All</button>
-          <button
-            className={filter === 'ongoing' ? 'active' : ''}
-            onClick={() => setFilter('ongoing')}
-          >Ongoing</button>
-          <button
-            className={filter === 'completed' ? 'active' : ''}
-            onClick={() => setFilter('completed')}
-          >Completed</button>
+          <button className={filter === 'all' ? 'active' : ''} onClick={() => setFilter('all')}>All</button>
+          <button className={filter === 'ongoing' ? 'active' : ''} onClick={() => setFilter('ongoing')}>Ongoing</button>
+          <button className={filter === 'completed' ? 'active' : ''} onClick={() => setFilter('completed')}>Completed</button>
         </div>
       </div>
       <div className="browse-grid">
         {filtered.length > 0 ? (
           filtered.map(anime => (
-            <AnimeCard key={anime.id} anime={anime} />
+            <AnimeCard key={anime.id} anime={anime} watchlist={watchlist} setWatchlist={setWatchlist} />
           ))
         ) : (
           <p className="no-results">No anime found.</p>
