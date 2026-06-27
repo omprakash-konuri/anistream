@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import './Admin.css'
 import { apiFetch } from '../utils/api'
+import './Admin.css'
 
 function Admin() {
   const { user, token } = useAuth()
@@ -18,6 +18,16 @@ function Admin() {
     banner_url: ''
   })
   const [message, setMessage] = useState(null)
+  const [episodeForm, setEpisodeForm] = useState({
+    anime_id: '',
+    season_number: '1',
+    episode_number: '',
+    title: '',
+    description: '',
+    duration_seconds: '',
+    video_url: ''
+  })
+  const [episodeMessage, setEpisodeMessage] = useState(null)
 
   useEffect(() => {
     if (user?.role !== 'admin') {
@@ -37,6 +47,10 @@ function Admin() {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
+  }
+
+  const handleEpisodeChange = (e) => {
+    setEpisodeForm({ ...episodeForm, [e.target.name]: e.target.value })
   }
 
   const handleSubmit = async (e) => {
@@ -68,6 +82,37 @@ function Admin() {
     }
   }
 
+  const handleEpisodeSubmit = async (e) => {
+    e.preventDefault()
+    const { anime_id, ...episodeData } = episodeForm
+
+    const response = await apiFetch(`/api/v1/animes/${anime_id}/episodes`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(episodeData)
+    })
+
+    const data = await response.json()
+
+    if (response.ok) {
+      setEpisodeMessage('Episode added successfully!')
+      setEpisodeForm({
+        anime_id: '',
+        season_number: '1',
+        episode_number: '',
+        title: '',
+        description: '',
+        duration_seconds: '',
+        video_url: ''
+      })
+    } else {
+      setEpisodeMessage(data.errors?.join(', '))
+    }
+  }
+
   const handleDelete = async (id) => {
     await apiFetch(`/api/v1/animes/${id}`, {
       method: 'DELETE',
@@ -96,6 +141,26 @@ function Admin() {
           <input name="thumbnail_url" placeholder="Thumbnail URL" value={form.thumbnail_url} onChange={handleChange} />
           <input name="banner_url" placeholder="Banner URL" value={form.banner_url} onChange={handleChange} />
           <button type="submit">Add Anime</button>
+        </form>
+      </div>
+
+      <div className="admin-form-section">
+        <h2>Add New Episode</h2>
+        {episodeMessage && <p className="admin-message">{episodeMessage}</p>}
+        <form className="admin-form" onSubmit={handleEpisodeSubmit}>
+          <select name="anime_id" value={episodeForm.anime_id} onChange={handleEpisodeChange} required>
+            <option value="">Select Anime</option>
+            {animes.map(anime => (
+              <option key={anime.id} value={anime.id}>{anime.title}</option>
+            ))}
+          </select>
+          <input name="season_number" placeholder="Season Number" type="number" value={episodeForm.season_number} onChange={handleEpisodeChange} required />
+          <input name="episode_number" placeholder="Episode Number" type="number" value={episodeForm.episode_number} onChange={handleEpisodeChange} required />
+          <input name="title" placeholder="Episode Title" value={episodeForm.title} onChange={handleEpisodeChange} required />
+          <textarea name="description" placeholder="Episode Description" value={episodeForm.description} onChange={handleEpisodeChange} />
+          <input name="duration_seconds" placeholder="Duration (seconds)" type="number" value={episodeForm.duration_seconds} onChange={handleEpisodeChange} />
+          <input name="video_url" placeholder="Video URL" value={episodeForm.video_url} onChange={handleEpisodeChange} required />
+          <button type="submit">Add Episode</button>
         </form>
       </div>
 

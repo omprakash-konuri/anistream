@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :animes, only: [:index, :show, :create, :update, :destroy] do
-        resources :episodes, only: [:index, :show]
+        resources :episodes, only: [:index, :show, :create]
       end
 
       resources :episodes, only: [:show]
