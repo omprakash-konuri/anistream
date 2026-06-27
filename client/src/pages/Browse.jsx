@@ -56,7 +56,12 @@ function Browse() {
             <AnimeCard key={anime.id} anime={anime} watchlist={watchlist} setWatchlist={setWatchlist} />
           ))
         ) : (
-          <p className="no-results">No anime found.</p>
+          <div className="no-results-empty">
+            <div className="empty-icon">🔍</div>
+            <h2>No anime found</h2>
+            <p>Try a different search term or filter.</p>
+            <button onClick={() => { setSearch(''); setFilter('all') }}>Clear filters</button>
+          </div>
         )}
       </div>
     </div>
