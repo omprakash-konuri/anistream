@@ -41,27 +41,29 @@ function Login() {
   }
 
   return (
-    <div>
-      <h1>Login</h1>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <input    
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleSubmit} disabled={loading}>
-        {loading ? 'Logging in...' : 'Login'}
-      </button>
-      <p className="login-switch">
-        Don't have an account? <a href="/register">Register</a>
-      </p>
+    <div className="login-page">
+      <div className="login-form">
+        <h1>Login</h1>
+        {error && <p className="login-error">{error}</p>}
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button onClick={handleSubmit} disabled={loading}>
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
+        <p className="login-switch">
+          Don't have an account? <a href="/register">Register</a>
+        </p>
+      </div>
     </div>
   )
 }
