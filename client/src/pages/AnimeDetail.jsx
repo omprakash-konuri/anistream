@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import './AnimeDetail.css'
 import { apiFetch } from '../utils/api'
+import './AnimeDetail.css'
 
 function AnimeDetail() {
   const { token } = useAuth()
@@ -14,20 +14,30 @@ function AnimeDetail() {
 
   useEffect(() => {
     Promise.all([
-        apiFetch(`/api/v1/animes/${id}`, {
+      apiFetch(`/api/v1/animes/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
-        }).then(r => r.json()),
-        apiFetch(`/api/v1/animes/${id}/episodes`, {
+      }).then(r => r.json()),
+      apiFetch(`/api/v1/animes/${id}/episodes`, {
         headers: { 'Authorization': `Bearer ${token}` }
-        }).then(r => r.json())
+      }).then(r => r.json())
     ]).then(([animeData, episodesData]) => {
-        setAnime(animeData)
-        setEpisodes(episodesData)
-        setLoading(false)
+      setAnime(animeData)
+      setEpisodes(episodesData)
+      setLoading(false)
     })
   }, [id, token])
 
-  if (loading) return <h2>Loading...</h2>
+  if (loading) {
+    return (
+      <div className="anime-detail">
+        <div className="anime-detail-hero" style={{ background: 'var(--bg-secondary)', height: '200px', borderRadius: '8px', marginBottom: '40px' }}></div>
+        <div style={{ height: '24px', width: '200px', background: 'var(--bg-secondary)', borderRadius: '4px', marginBottom: '20px' }}></div>
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div key={i} style={{ height: '80px', background: 'var(--bg-secondary)', borderRadius: '8px', marginBottom: '12px' }}></div>
+        ))}
+      </div>
+    )
+  }
 
   const formatDuration = (seconds) => {
     const mins = Math.floor(seconds / 60)
@@ -36,7 +46,14 @@ function AnimeDetail() {
 
   return (
     <div className="anime-detail">
-      <div className="anime-detail-hero">
+      <div
+        className="anime-detail-hero"
+        style={{
+          backgroundImage: anime.banner_url
+            ? `linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(20,20,20,1)), url(${anime.banner_url})`
+            : 'none'
+        }}
+      >
         <div className="anime-detail-info">
           <h1>{anime.title}</h1>
           <div className="anime-detail-meta">
@@ -50,7 +67,9 @@ function AnimeDetail() {
       <div className="episodes-section">
         <h2>Episodes</h2>
         {episodes.length === 0 ? (
-          <p>No episodes available.</p>
+          <div className="episodes-empty">
+            <p>No episodes available yet.</p>
+          </div>
         ) : (
           <div className="episodes-list">
             {episodes.map(episode => (

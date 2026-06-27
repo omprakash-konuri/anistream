@@ -1,7 +1,12 @@
 .anime-detail-hero {
-  padding: 40px 0;
+  padding: 80px 0 40px;
   margin-bottom: 40px;
   border-bottom: 1px solid var(--border);
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+  margin-top: -20px;
 }
 
 .anime-detail-info h1 {
@@ -76,4 +81,10 @@
 .episode-duration {
   font-size: 12px;
   color: var(--text-secondary);
+}
+
+.episodes-empty {
+  padding: 40px 0;
+  color: var(--text-secondary);
+  font-size: 14px;
 }
